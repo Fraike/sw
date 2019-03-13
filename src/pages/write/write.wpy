@@ -63,7 +63,7 @@
     }
 }
 
-.date_picker {
+._picker {
     width: 100%;
     margin-top: 20rpx;
     // padding: 10rpx;
@@ -71,11 +71,14 @@
     padding-left: 50rpx;
     padding-bottom: 15rpx;
     background-color: white;
+    display: flex;
+    align-items: center;
+    font-size: 30rpx;
     .picker {
         font-size: 30rpx;
     }
     .date_text {
-        float: right;
+        // float: right;
         margin-right: 80rpx;
     }
 }
@@ -97,17 +100,29 @@
             </view>
           </view>
         </view>
-        <view class="date_picker">
+        <view class="_picker">
+            <view class="picker">
+                发生时间: 
+            </view>
             <picker
+                class="date_picker"
                 mode="date"
                 value="{{date}}"
                 start="2015-09-01"
                 end="2017-09-01"
                 bindchange="bindDateChange"
             >
-                <view class="picker">
-                发生时间: <view class="date_text">{{date}}</view>
-                </view>
+                <view class="date_text">{{date}}</view>
+            </picker>
+            <picker
+                class="time_picker"
+                mode="time"
+                value="{{time}}"
+                start="2015-09-01"
+                end="2017-09-01"
+                bindchange="bindDateChange"
+            >
+                <view class="date_text">{{time}}</view>
             </picker>
         </view>
     
@@ -136,7 +151,8 @@ export default class Write extends wepy.page {
 
   data = {
       images: [],
-      date:  new Date().toLocaleString()
+      date:  new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate(),
+      time:  new Date().getHours()+':'+new Date().getMinutes()
   }; // 页面所需数据均需在这里声明，可用于模板数据绑定
 
   components = {}; // 声明页面中所引用的组件，或声明组件中所引用的子组件
