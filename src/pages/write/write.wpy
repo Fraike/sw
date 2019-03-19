@@ -75,7 +75,7 @@
     align-items: center;
     font-size: 30rpx;
     .picker {
-        font-size: 30rpx;
+        margin-right: 100rpx;
     }
     .date_text {
         // float: right;
