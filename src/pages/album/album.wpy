@@ -1,8 +1,110 @@
-<style>
+<style lang="less" scoped>
+  .item {
+    width: 100%;
+    padding-top: 15rpx;
+    padding-left: 50rpx;
+    padding-bottom: 25rpx;
+    background-color: white;
+     margin-bottom: 20rpx;
+     animation: fadeIn .8s;
+    //  animation-delay:
+    .item_header{
+      width: 90%;
+      padding-bottom: 15rpx;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 15rpx;
+      h2 {
+        font-size: 40rpx;
+        margin-right: 10rpx;
+      }
+      span {
+        font-size: 25rpx;
+        color: #ababab;
+      }
+    }
+    .photo_wrapper{
+      display: flex;
+      position: relative;
+      image {
+        width: 150rpx;
+        height:150rpx;
+        margin-right: 30rpx;
+      }
+      .more {
+        width:150rpx;
+        height: 150rpx;
+        position: absolute;
+        left: 540rpx;
+        line-height: 150rpx;
+        text-align: center;
+        text-decoration:underline;
+        color:white;
+        font-size: 30rpx;
+        border-bottom: 1px solid #eee;
+        background-color: rgba(0,0,0,.3)
+      }
+
+    }
+  }
+@keyframes fadeIn{
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
 </style>
 
 <template>
-  <div>album</div>
+  <view class="container">
+    <view class="item" style="animation-delay:0s">
+      <view class="item_header">
+        <h2>xxxx</h2>
+        <span>(3 photos)</span>
+      </view>
+      <view class="photo_wrapper">
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill">111</image>
+
+          <view class="more">More</view>        
+      </view>
+    </view>
+    <view class="item" style="animation-delay:.5s">
+      <view class="item_header">
+        <h2>xxxx</h2>
+        <span>(3 photos)</span>
+      </view>
+      <view class="photo_wrapper">
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill">111</image>
+
+          <view class="more">More</view>        
+      </view>
+    </view>
+    <view class="item" style="animation-delay:1s">
+      <view class="item_header">
+        <h2>xxxx</h2>
+        <span>(3 photos)</span>
+      </view>
+      <view class="photo_wrapper">
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
+          <image src="../../assests/images/bg.jpg" mode="aspectFill">111</image>
+
+          <view class="more">More</view>        
+      </view>
+    </view>
+
+  </view>
 </template>
 
 <script>
