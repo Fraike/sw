@@ -7,6 +7,8 @@
     background-color: white;
      margin-bottom: 20rpx;
      animation: fadeIn .8s;
+     opacity: 0;
+     animation-fill-mode:forwards;
     //  animation-delay:
     .item_header{
       width: 90%;
@@ -61,30 +63,26 @@
 
 <template>
   <view class="container">
-    <view class="item" style="animation-delay:0s">
+    <view wx:for="{{albumList}}" class="item" wx:key="index" style="animation-delay:{{index/3}}s">
       <view class="item_header">
-        <h2>xxxx</h2>
+        <h2>{{item.title}}</h2>
         <span>(3 photos)</span>
       </view>
       <view class="photo_wrapper">
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill">111</image>
-
+          <image wx:for="{{item.imgList}}" wx:key="imgIndex" @tap="prviewImage({{item.imgList}},{{imgItem}})" wx:for-index="imgIndex" wx:for-item="imgItem" src="{{imgItem}}" mode="aspectFill"></image>
           <view class="more">More</view>        
       </view>
     </view>
-    <view class="item" style="animation-delay:.5s">
+    <!-- <view class="item" style="animation-delay':'+{}+'s">
       <view class="item_header">
         <h2>xxxx</h2>
         <span>(3 photos)</span>
       </view>
       <view class="photo_wrapper">
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill">111</image>
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill">111</image>
 
           <view class="more">More</view>        
       </view>
@@ -95,14 +93,14 @@
         <span>(3 photos)</span>
       </view>
       <view class="photo_wrapper">
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill"></image>
-          <image src="../../assests/images/bg.jpg" mode="aspectFill">111</image>
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill">111</image>
 
           <view class="more">More</view>        
       </view>
-    </view>
+    </view> -->
 
   </view>
 </template>
@@ -125,7 +123,37 @@ export default class Album extends wepy.page {
 
   config = {}; // 只在Page实例中存在的配置数据，对应于原生的page.json文件
 
-  data = {}; // 页面所需数据均需在这里声明，可用于模板数据绑定
+  data = {
+    albumList: [
+      {
+        title: "xxx",
+        imgList: [
+          "http://images.lovewwt.com/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+        ]
+      },
+      {
+        title: "xxx",
+        imgList: [
+          "http://images.lovewwt.com/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+        ]
+      },
+      {
+        title: "xxx",
+        imgList: [
+          "http://images.lovewwt.com/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://images.lovewwt.com/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+        ]
+      }
+    ]
+  }; // 页面所需数据均需在这里声明，可用于模板数据绑定
 
   components = {}; // 声明页面中所引用的组件，或声明组件中所引用的子组件
 
@@ -135,7 +163,18 @@ export default class Album extends wepy.page {
 
   watch = {}; // 声明数据watcher（详见后文介绍）
 
-  methods = {}; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
+  methods = {
+    prviewImage(imgList,imgIndex){
+      let tmpList = imgList.map((item,index)=>{
+        let tmpIndex = item.indexOf('?')
+        return item.slice(0,tmpIndex)+"?imageslim"
+      })
+      wx.previewImage({
+        current: imgIndex, // 当前显示图片的http链接
+        urls: tmpList // 需要预览的图片http链接列表
+      })
+    }
+  }; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
 
   events = {}; // 声明组件之间的事件处理函数
 }

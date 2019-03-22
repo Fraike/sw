@@ -1,10 +1,53 @@
 <style lang="less" scoped>
+.container {
+  width: 100%;
+  display: flex;
+}
 
+.fall-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.fall-right {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;
+}
 </style>
 
 <template>
   <view class="container">
-   
+      <!-- <view class="img_item">
+          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFit"></image>
+      </view> -->
+        <view class='fall-left'>
+            <block wx:for="{{leftList}}" wx:key="{{item.id}}">
+            <!--瀑布流内容卡片-->
+            <!-- <template is='goodsCard' data="{{data:item}}" /> -->
+            <image 
+            class='card-img' 
+            mode='aspectFill' 
+            style='width:{{item.itemWidth}}px;height:{{item.itemHeight}}px;' 
+            src='{{item.img}}' 
+            lazy-load>
+            </image>
+            </block>
+        </view>
+        <!--右边一列 -->
+        <view class='fall-right'>
+            <block wx:for="{{rightList}}" wx:key="{{item.id}}">
+            <!--瀑布流内容卡片-->
+            <!-- <template is='goodsCard' data="{{data:item}}" /> -->
+            <image 
+            class='card-img' 
+            mode='aspectFill' 
+            style='width:{{item.itemWidth}}px;height:{{item.itemHeight}}px;' 
+            src='{{item.img}}' 
+            lazy-load>
+            </image>
+            </block>
+        </view>
   </view>
 </template>
 
@@ -13,20 +56,36 @@ import wepy from 'wepy';
 
 export default class Gallery extends wepy.page {
   config = {
-    navigationBarTitleText: '相册'
+    navigationBarTitleText: '画廊'
   };
 
   customData = {}; // 自定义数据
 
   customFunction() {} //自定义方法
 
-  onLoad() {} // 在Page和Component共用的生命周期函数
+  onLoad() {
+        wx.getSystemInfo({
+            success: (res) => {
+                let percentage = 750 / res.windowWidth;
+                let margin = 20 / percentage;
+                itemWidth = (res.windowWidth - margin) / 2;
+                maxHeight = itemWidth / 0.8
+            }
+        });
+  } // 在Page和Component共用的生命周期函数
 
   onShow() {} // 只在Page中存在的页面生命周期函数
 
   config = {}; // 只在Page实例中存在的配置数据，对应于原生的page.json文件
 
-  data = {}; // 页面所需数据均需在这里声明，可用于模板数据绑定
+  data = {
+    //   leftList: [], 
+    //   rightList: [],
+    //   leftHight: 0,
+    //   rightHight: 0,
+    //   itemWidth: 0,
+    //   maxHeight: 0
+  }; // 页面所需数据均需在这里声明，可用于模板数据绑定
 
   components = {}; // 声明页面中所引用的组件，或声明组件中所引用的子组件
 
@@ -36,7 +95,42 @@ export default class Gallery extends wepy.page {
 
   watch = {}; // 声明数据watcher（详见后文介绍）
 
-  methods = {}; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
+  methods = {
+    //    fillData: function (isPull, listData) {
+    //   if (isPull) { //是否下拉刷新，是的话清除之前的数据
+    //     leftList.length = 0;
+    //     rightList.length = 0;
+    //     leftHight = 0;
+    //     rightHight = 0;
+    //   }
+    //   for (let i = 0, len = listData.length; i < len; i++) {
+    //     let tmp = listData[i];
+    //     tmp.width = parseInt(tmp.width);
+    //     tmp.height = parseInt(tmp.height);
+    //     tmp.itemWidth = itemWidth
+    //     let per = tmp.width / tmp.itemWidth;
+    //     tmp.itemHeight = tmp.height / per;
+    //     if (tmp.itemHeight > maxHeight) {
+    //       tmp.itemHeight = maxHeight;
+    //     }
+        
+    //     if (leftHight == rightHight) {
+    //       leftList.push(tmp);
+    //       leftHight = leftHight + tmp.itemHeight;
+    //     } else if (leftHight < rightHight) {
+    //       leftList.push(tmp);
+    //       leftHight = leftHight + tmp.itemHeight;
+    //     } else {
+    //       rightList.push(tmp);
+    //       rightHight = rightHight + tmp.itemHeight;
+    //     }
+    //   }
+
+    //   this.setData({
+    //     leftList: leftList,
+    //     rightList: rightList,
+    //   });
+  }; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
 
   events = {}; // 声明组件之间的事件处理函数
 }
