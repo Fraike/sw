@@ -32,6 +32,9 @@
         height:150rpx;
         margin-right: 30rpx;
       }
+      image::after{
+        content: "你好"
+      }
       .more {
         width:150rpx;
         height: 150rpx;
@@ -42,7 +45,7 @@
         text-decoration:underline;
         color:white;
         font-size: 30rpx;
-        border-bottom: 1px solid #eee;
+        // border-bottom: 1px solid #eee;
         background-color: rgba(0,0,0,.3)
       }
 
@@ -70,7 +73,7 @@
       </view>
       <view class="photo_wrapper">
           <image wx:for="{{item.imgList}}" wx:key="imgIndex" @tap="prviewImage({{item.imgList}},{{imgItem}})" wx:for-index="imgIndex" wx:for-item="imgItem" src="{{imgItem}}" mode="aspectFill"></image>
-          <view class="more">More</view>        
+          <!-- <view class="more">More</view>         -->
       </view>
     </view>
     <!-- <view class="item" style="animation-delay':'+{}+'s">

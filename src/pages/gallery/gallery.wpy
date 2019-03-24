@@ -21,10 +21,8 @@
       <!-- <view class="img_item">
           <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFit"></image>
       </view> -->
-        <view class='fall-left'>
+        <!-- <view class='fall-left'>
             <block wx:for="{{leftList}}" wx:key="{{item.id}}">
-            <!--瀑布流内容卡片-->
-            <!-- <template is='goodsCard' data="{{data:item}}" /> -->
             <image 
             class='card-img' 
             mode='aspectFill' 
@@ -34,11 +32,8 @@
             </image>
             </block>
         </view>
-        <!--右边一列 -->
         <view class='fall-right'>
             <block wx:for="{{rightList}}" wx:key="{{item.id}}">
-            <!--瀑布流内容卡片-->
-            <!-- <template is='goodsCard' data="{{data:item}}" /> -->
             <image 
             class='card-img' 
             mode='aspectFill' 
@@ -47,7 +42,7 @@
             lazy-load>
             </image>
             </block>
-        </view>
+        </view> -->
   </view>
 </template>
 
@@ -64,14 +59,14 @@ export default class Gallery extends wepy.page {
   customFunction() {} //自定义方法
 
   onLoad() {
-        wx.getSystemInfo({
-            success: (res) => {
-                let percentage = 750 / res.windowWidth;
-                let margin = 20 / percentage;
-                itemWidth = (res.windowWidth - margin) / 2;
-                maxHeight = itemWidth / 0.8
-            }
-        });
+        // wx.getSystemInfo({
+        //     success: (res) => {
+        //         let percentage = 750 / res.windowWidth;
+        //         let margin = 20 / percentage;
+        //         itemWidth = (res.windowWidth - margin) / 2;
+        //         maxHeight = itemWidth / 0.8
+        //     }
+        // });
   } // 在Page和Component共用的生命周期函数
 
   onShow() {} // 只在Page中存在的页面生命周期函数
