@@ -82,10 +82,10 @@
         <span>(3 photos)</span>
       </view>
       <view class="photo_wrapper">
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill">111</image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill">111</image>
 
           <view class="more">More</view>        
       </view>
@@ -96,10 +96,10 @@
         <span>(3 photos)</span>
       </view>
       <view class="photo_wrapper">
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill"></image>
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFill">111</image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill">111</image>
 
           <view class="more">More</view>        
       </view>
@@ -131,28 +131,28 @@ export default class Album extends wepy.page {
       {
         title: "xxx",
         imgList: [
-          "http://images.lovewwt.com/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+          "http://cdn.mitty.work/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
         ]
       },
       {
         title: "xxx",
         imgList: [
-          "http://images.lovewwt.com/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+          "http://cdn.mitty.work/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
         ]
       },
       {
         title: "xxx",
         imgList: [
-          "http://images.lovewwt.com/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
-          "http://images.lovewwt.com/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+          "http://cdn.mitty.work/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
         ]
       }
     ]

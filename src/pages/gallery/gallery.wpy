@@ -19,7 +19,7 @@
 <template>
   <view class="container">
       <!-- <view class="img_item">
-          <image src="http://images.lovewwt.com/article1.jpg?imageslim" mode="aspectFit"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFit"></image>
       </view> -->
         <!-- <view class='fall-left'>
             <block wx:for="{{leftList}}" wx:key="{{item.id}}">
