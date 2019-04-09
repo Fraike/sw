@@ -1,6 +1,6 @@
 <style lang="less" scoped>
 .wrapper {
-    height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,170 +9,164 @@
   overflow: hidden;
 }
 .content_wrapper {
-    width: 100%;
-    background-color: white;
-    margin-top: 10rpx;
-    padding-top: 10rpx;
-    padding-left:50rpx;
-    padding-bottom: 20rpx;
-    overflow: hidden;
-    textarea {
-        font-size: 30rpx;
+  width: 100%;
+  background-color: white;
+  margin-top: 10rpx;
+  padding-top: 10rpx;
+  padding-left: 50rpx;
+  padding-bottom: 20rpx;
+  overflow: hidden;
+  textarea {
+    font-size: 30rpx;
+  }
+  .image_container {
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    flex-wrap: wrap;
+    .image_btn {
+      width: 211rpx;
+      height: 211rpx;
+      margin-top: -18rpx;
+      // margin-left: 20rpx;
+      border: 6rpx solid #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      image {
+        width: 40%;
+        height: 40%;
+      }
     }
-    .image_container {
-        display: flex;
-        align-items: center;
-        // justify-content: space-between;
-        flex-wrap: wrap;
-        .image_btn {
-        width:  211rpx;
-        height: 211rpx;
-        margin-top: -18rpx;
-        // margin-left: 20rpx;
-        border: 6rpx solid #eee;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-            image{
-                width: 40%;
-                height: 40%;
-            }
-        }
-        .image_item{
-            width: 223rpx;
-            height: 223rpx;
-            margin-right: 20rpx;
-            margin-bottom: 20rpx;
-            position: relative;
-            .image{
-                width: 100%;
-                height: 100%;
-            }
-            .delete_btn {
-                width: 60rpx;
-                height: 60rpx;
-                position: absolute;
-                top: 15rpx;
-                right: 15rpx;
-                z-index: 99;
-            }
-        }
-        .image_item:nth-child(3n){
-        margin-right: none;
-        }
+    .image_item {
+      width: 223rpx;
+      height: 223rpx;
+      margin-right: 20rpx;
+      margin-bottom: 20rpx;
+      position: relative;
+      .image {
+        width: 100%;
+        height: 100%;
+      }
+      .delete_btn {
+        width: 60rpx;
+        height: 60rpx;
+        position: absolute;
+        top: 15rpx;
+        right: 15rpx;
+        z-index: 99;
+      }
     }
+    .image_item:nth-child(3n) {
+      margin-right: none;
+    }
+  }
 }
 
 ._picker {
-    width: 100%;
-    position: relative;
-    margin-top: 20rpx;
-    // padding: 10rpx;
-    padding-top: 15rpx;
-    padding-left: 50rpx;
-    padding-bottom: 15rpx;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    font-size: 30rpx;
-    color: #999;
-    .picker {
-        margin-right: 280rpx;
-        color: black;
-    }
-    .date_text {
-        // float: right;
-        margin-right: 30rpx;
-    }
-    .location_picker {
-        color: black
-    }
-    .location {
-        position: absolute;
-        right: 40rpx;
-    }
+  width: 100%;
+  position: relative;
+  margin-top: 20rpx;
+  // padding: 10rpx;
+  padding-top: 15rpx;
+  padding-left: 50rpx;
+  padding-bottom: 15rpx;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  color: #999;
+  .picker {
+    margin-right: 280rpx;
+    color: black;
+  }
+  .date_text {
+    // float: right;
+    margin-right: 30rpx;
+  }
+  .location_picker {
+    color: black;
+  }
+  .location {
+    position: absolute;
+    right: 40rpx;
+  }
 }
-.footer_btn{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 130rpx;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .upload_btn {
-        width: 90%;
-        height: 100rpx;
-        border-radius: 18rpx;
-        background-color: #fd92b0;
-        text-align: center;
-        line-height: 100rpx;
-        font-size: 45rpx;
-        color: white;
-        letter-spacing: 6rpx;
-        transition: all .1s ease-in;
-        &:active {
-            background-color: #fd92b062;
-        }
+.footer_btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 130rpx;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .upload_btn {
+    width: 90%;
+    height: 100rpx;
+    border-radius: 18rpx;
+    background-color: #fd92b0;
+    text-align: center;
+    line-height: 100rpx;
+    font-size: 45rpx;
+    color: white;
+    letter-spacing: 6rpx;
+    transition: all 0.1s ease-in;
+    &:active {
+      background-color: #fd92b062;
     }
+  }
 }
 </style>
 
 <template>
-  <view class="wrapper">
+    <view class="wrapper">
         <view class="content_wrapper">
-          <textarea class="text" placeholder="写下你想说的吧（选填）"></textarea>
-          <view class="image_container">
-            <block wx:if="{{images.length>0}}" wx:for="{{images}}" wx:key="{{index}}">
-                <view class="image_item">
-                    <image  class="image" src="{{item}}"  mode="aspectFil" @tap="previewImage(index)"></image>
-                    <image class="delete_btn" src="../../assests/images/delete.png" @tap="deleteImage(index)"></image>
+            <textarea class="text" placeholder="写下你想说的吧（选填）"></textarea>
+            <view class="image_container">
+                <block wx:if="{{images.length>0}}" wx:for="{{images}}" wx:key="{{index}}">
+                    <view class="image_item">
+                        <image
+                            class="image"
+                            src="{{item}}"
+                            mode="aspectFil"
+                            @tap="previewImage(index)"
+                        >
+                        <image
+                            class="delete_btn"
+                            src="../../assests/images/delete.png"
+                            @tap="deleteImage(index)"
+                        >
+                    </view>
+                </block>
+                <view class="image_btn" @tap="chooseImage" wx:if="{{images.length <9}}">
+                    <image src="../../assests/images/plus.png" mode="aspectFit">
                 </view>
-            </block>
-            <view class="image_btn" @tap="chooseImage" wx:if="{{images.length <9}}">
-                <image src="../../assests/images/plus.png" mode="aspectFit"></image>
             </view>
-          </view>
         </view>
         <view class="_picker">
-            <view class="picker">
-                发生时间: 
-            </view>
-            <picker
-                class="date_picker"
-                mode="date"
-                value="{{date}}"
-                bindchange="bindDateChange"
-            >
+            <view class="picker">发生时间:</view>
+            <picker class="date_picker" mode="date" value="{{date}}" bindchange="bindDateChange">
                 <view class="date_text">{{date}}</view>
             </picker>
-            <picker
-                class="time_picker"
-                mode="time"
-                value="{{time}}"
-                bindchange="bindTimeChange"
-            >
+            <picker class="time_picker" mode="time" value="{{time}}" bindchange="bindTimeChange">
                 <view class="date_text">{{time}}</view>
             </picker>
         </view>
         <view class="_picker" @tap="handleChooseLocation">
-            <view class="location_picker">
-                所在位置：
-            </view>
-            <view class="location">
-                {{location}}
-            </view>
+            <view class="location_picker">所在位置：</view>
+            <view class="location">{{location}}</view>
         </view>
         <view class="footer_btn">
             <view class="upload_btn">确认上传</view>
             <!-- <button>上传</button> -->
         </view>
-  </view>
+    </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+const qiniuUploader = require("../../plugins/qiniuUploader.js");
 
 export default class Write extends wepy.page {
   config = {
@@ -184,91 +178,103 @@ export default class Write extends wepy.page {
   customFunction() {} //自定义方法
 
   onLoad() {
-      console.log(this.images instanceof Object)
+
   } // 在Page和Component共用的生命周期函数
 
-  onShow() {} // 只在Page中存在的页面生命周期函数
+  onShow() {
+    wx.request({
+    url: 'http://www.mitty.work:3001/getToken', // 仅为示例，并非真实的接口地址
+    method: 'GET',
+    header: {
+        'content-type': 'application/json' // 默认值
+    },
+    success(res) {
+        console.log(res)
+    }
+    })
+  } // 只在Page中存在的页面生命周期函数
 
   config = {}; // 只在Page实例中存在的配置数据，对应于原生的page.json文件
 
   data = {
-      images: [],
-      date:  new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate(),
-      time:  '',
-      location: ''
+    images: [],
+    date:
+      new Date().getFullYear() +
+      '-' +
+      new Date().getMonth() +
+      '-' +
+      new Date().getDate(),
+    time: '',
+    location: ''
   }; // 页面所需数据均需在这里声明，可用于模板数据绑定
 
   components = {}; // 声明页面中所引用的组件，或声明组件中所引用的子组件
 
-
   computed = {
-      time(){
-          let hour = new Date().getHours()
-          let minute = new Date().getMinutes()
-          console.log(typeof hour)
-          if(hour<10){
-              hour = '0' + hour
-          }
-          if(minute<10){
-              minute = '0' + minute
-          }
-          return hour+':'+minute;
+    time() {
+      let hour = new Date().getHours();
+      let minute = new Date().getMinutes();
+      if (hour < 10) {
+        hour = '0' + hour;
       }
+      if (minute < 10) {
+        minute = '0' + minute;
+      }
+      return hour + ':' + minute;
+    }
   }; // 声明计算属性（详见后文介绍）
 
   watch = {}; // 声明数据watcher（详见后文介绍）
 
   methods = {
-      chooseImage(){
-          let self = this;
-          wx.chooseImage({
-              count:9,
-              sizeType: ['original', 'compressed'],
-              sourceType: ['album', 'camera'],
-              success:function(res){
-                self.images = self.images.concat(res.tempFilePaths)
-                self.$apply()
-              },
-              complete:function(e){
-                 
-              }
-          })
-      },
-      previewImage(index){
-           wx.previewImage({
-                    current: this.images[index],  //当前预览的图片
-                    urls: this.images,  //所有要预览的图片
-                    })
-      },
-      deleteImage(index){
-           this.images.splice(index, 1)
-      },
+    chooseImage() {
+      let self = this;
+      wx.chooseImage({
+        count: 9,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function(res) {
+          self.images = self.images.concat(res.tempFilePaths);
+          self.$apply();
+        },
+        complete: function(e) {}
+      });
+    },
+    previewImage(index) {
+      wx.previewImage({
+        current: this.images[index], //当前预览的图片
+        urls: this.images //所有要预览的图片
+      });
+    },
+    deleteImage(index) {
+      this.images.splice(index, 1);
+    },
     bindDateChange(e) {
-        console.log('picker发送选择改变，携带值为', e.detail.value)
-        this.date = e.detail.value
-        this.$apply()
+      console.log('picker发送选择改变，携带值为', e.detail.value);
+      this.date = e.detail.value;
+      this.$apply();
     },
-     bindTimeChange(e) {
-        console.log('picker发送选择改变，携带值为', e.detail.value)
-        this.time = e.detail.value
-        this.$apply()
+    bindTimeChange(e) {
+      console.log('picker发送选择改变，携带值为', e.detail.value);
+      this.time = e.detail.value;
+      this.$apply();
     },
-    handleChooseLocation(){
-        let self = this;
-        wx.chooseLocation({
-            success:function(res){
-                console.log(res)
-                if(res.address == ""){
-                    wx.showToast({
-                        title: '要选择一个位置唷',
-                        icon: 'none'
-                    })
-                    return;
-                }
-                self.location = res.address.substr(3);
-                self.$apply()
-            }
-        })
+    handleChooseLocation() {
+      let self = this;
+      wx.chooseLocation({
+        success: function(res) {
+          console.log(res);
+          if (res.address == '') {
+            wx.showToast({
+              title: '要选择一个位置唷',
+              icon: 'none'
+            });
+            return;
+          }
+          self.location = res.address.substr(3);
+          self.$apply();
+        }
+      });
     }
   }; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
 

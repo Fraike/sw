@@ -1,132 +1,163 @@
 <style lang="less" scoped>
-.container {
-  width: 100%;
-  display: flex;
+.img_item {
+  width: 48vw;
+  margin: 1%;
+  display: inline-block;
+  vertical-align: top;
 }
 
-.fall-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.fall-right {
-  display: flex;
-  flex-direction: column;
-  margin-left: 20rpx;
-}
 </style>
 
 <template>
   <view class="container">
-      <!-- <view class="img_item">
-          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFit"></image>
-      </view> -->
-        <!-- <view class='fall-left'>
-            <block wx:for="{{leftList}}" wx:key="{{item.id}}">
-            <image 
-            class='card-img' 
-            mode='aspectFill' 
-            style='width:{{item.itemWidth}}px;height:{{item.itemHeight}}px;' 
-            src='{{item.img}}' 
-            lazy-load>
-            </image>
-            </block>
+    <view style="display:none">
+      <image
+        wx:for="{{images}}"
+        wx:key="id"
+        id="{{item.id}}"
+        src="{{item.pic}}"
+        bindload="onImageLoad"
+      >
+    </view>
+    <scroll-view scroll-y="true" style="height:{{scrollH}}px" bindscrolltolower="loadImages">
+      <view style="width:100%">
+        <view class="img_item">
+          <view wx:for="{{col1}}" wx:key="id">
+            <image src="{{item.pic}}"  @tap="prviewImage({{item.pic}})" style="width:100%;height:{{item.height}}px">
+          </view>
         </view>
-        <view class='fall-right'>
-            <block wx:for="{{rightList}}" wx:key="{{item.id}}">
-            <image 
-            class='card-img' 
-            mode='aspectFill' 
-            style='width:{{item.itemWidth}}px;height:{{item.itemHeight}}px;' 
-            src='{{item.img}}' 
-            lazy-load>
-            </image>
-            </block>
-        </view> -->
+        <view class="img_item">
+          <view wx:for="{{col2}}" wx:key="id">
+            <image src="{{item.pic}}"  @tap="prviewImage({{item.pic}})" style="width:100%;height:{{item.height}}px">
+          </view>
+        </view>
+      </view>
+    </scroll-view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
 
+let col1H = 0;
+let col2H = 0;
+
+
 export default class Gallery extends wepy.page {
   config = {
     navigationBarTitleText: '画廊'
   };
 
-  customData = {}; // 自定义数据
-
-  customFunction() {} //自定义方法
-
   onLoad() {
-        // wx.getSystemInfo({
-        //     success: (res) => {
-        //         let percentage = 750 / res.windowWidth;
-        //         let margin = 20 / percentage;
-        //         itemWidth = (res.windowWidth - margin) / 2;
-        //         maxHeight = itemWidth / 0.8
-        //     }
-        // });
+      let self =this;
+      wx.getSystemInfo({
+      success: (res) => {
+          let ww = res.windowWidth;
+          let wh = res.windowHeight;
+          let imgWidth = ww * 0.48;
+          let scrollH = wh;
+          self.scrollH = scrollH;
+          self.imgWidth = imgWidth;
+          console.log(self.loadImages())
+          // self.loadImages();
+      }
+    })
   } // 在Page和Component共用的生命周期函数
-
-  onShow() {} // 只在Page中存在的页面生命周期函数
-
-  config = {}; // 只在Page实例中存在的配置数据，对应于原生的page.json文件
-
   data = {
-    //   leftList: [], 
-    //   rightList: [],
-    //   leftHight: 0,
-    //   rightHight: 0,
-    //   itemWidth: 0,
-    //   maxHeight: 0
+        scrollH: 0,
+        imgWidth: 0,
+        loadingCount: 0,
+        images: [],
+        col1: [],
+        col2: []
   }; // 页面所需数据均需在这里声明，可用于模板数据绑定
 
-  components = {}; // 声明页面中所引用的组件，或声明组件中所引用的子组件
-
-  mixins = []; // 声明页面所引用的Mixin实例
-
-  computed = {}; // 声明计算属性（详见后文介绍）
-
-  watch = {}; // 声明数据watcher（详见后文介绍）
-
   methods = {
-    //    fillData: function (isPull, listData) {
-    //   if (isPull) { //是否下拉刷新，是的话清除之前的数据
-    //     leftList.length = 0;
-    //     rightList.length = 0;
-    //     leftHight = 0;
-    //     rightHight = 0;
-    //   }
-    //   for (let i = 0, len = listData.length; i < len; i++) {
-    //     let tmp = listData[i];
-    //     tmp.width = parseInt(tmp.width);
-    //     tmp.height = parseInt(tmp.height);
-    //     tmp.itemWidth = itemWidth
-    //     let per = tmp.width / tmp.itemWidth;
-    //     tmp.itemHeight = tmp.height / per;
-    //     if (tmp.itemHeight > maxHeight) {
-    //       tmp.itemHeight = maxHeight;
-    //     }
-        
-    //     if (leftHight == rightHight) {
-    //       leftList.push(tmp);
-    //       leftHight = leftHight + tmp.itemHeight;
-    //     } else if (leftHight < rightHight) {
-    //       leftList.push(tmp);
-    //       leftHight = leftHight + tmp.itemHeight;
-    //     } else {
-    //       rightList.push(tmp);
-    //       rightHight = rightHight + tmp.itemHeight;
-    //     }
-    //   }
+        onImageLoad(e) {
+        let imageId = e.currentTarget.id;
+        let oImgW = e.detail.width;         //图片原始宽度
+        let oImgH = e.detail.height;        //图片原始高度
+        console.log(this.data)
+        let imgWidth = this.data.imgWidth;  //图片设置的宽度
+        let scale = imgWidth / oImgW;        //比例计算
+        let imgHeight = oImgH * scale;      //自适应高度
 
-    //   this.setData({
-    //     leftList: leftList,
-    //     rightList: rightList,
-    //   });
-  }; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
+        let images = this.data.images;
+        let imageObj = null;
 
-  events = {}; // 声明组件之间的事件处理函数
+        for (let i = 0; i < images.length; i++) {
+            let img = images[i];
+            if (img.id === imageId) {
+                imageObj = img;
+                break;
+            }
+        }
+
+        imageObj.height = imgHeight;
+
+        let loadingCount = this.data.loadingCount - 1;
+        let col1 = this.data.col1;
+        let col2 = this.data.col2;
+
+        if (col1H <= col2H) {
+            col1H += imgHeight;
+            col1.push(imageObj);
+        } else {
+            col2H += imgHeight;
+            col2.push(imageObj);
+        }
+
+        let data = {
+            loadingCount: loadingCount,
+            col1: col1,
+            col2: col2
+        };
+
+        if (!loadingCount) {
+            data.images = [];
+        }
+
+        // this.setData(data);
+    },
+        prviewImage(imgUrl){
+      // let tmpList = imgList.map((item,index)=>{
+      //   let tmpIndex = item.indexOf('?')
+      //   return item.slice(0,tmpIndex)+"?imageslim"
+      // })
+      wx.previewImage({
+        current: imgUrl, // 当前显示图片的http链接
+        urls: [imgUrl] // 需要预览的图片http链接列表
+      })
+    }
+  }; 
+          loadImages() {
+        let images = [
+
+            { pic: "http://cdn.mitty.work/article1.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article2.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article1.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article2.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article1.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article2.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article1.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article2.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
+        ];
+
+        let baseId = "img-" + (+new Date());
+
+        for (let i = 0; i < images.length; i++) {
+            images[i].id = baseId + "-" + i;
+        }
+        this.loadingCount = images.length;
+        this.images = images;
+        // this.setData({
+        //     loadingCount: images.length,
+        //     images: images
+        // });
+    }
 }
 </script>
