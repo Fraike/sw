@@ -16,6 +16,7 @@ page {
 <script>
 import wepy from 'wepy';
 import 'wepy-async-function';
+import regeneratorRuntime from './regenerator-runtime/runtime.js';
 
 import { setStore } from 'wepy-redux';
 import configStore from './store';
@@ -78,9 +79,9 @@ export default class extends wepy.app {
     this.use('promisify');
   }
 
-  onLaunch() {
+  async onLaunch() {
     let self = this;
-    wx.request({
+    await wx.request({
       url: 'http://www.mitty.work:3001/getToken', // 仅为示例，并非真实的接口地址
       method: 'GET',
       header: {
@@ -89,7 +90,7 @@ export default class extends wepy.app {
       success(res) {
         console.log(res.data)
         if(res.data.code == 0) {
-          self.token = res.data.token
+          self.globalData.token = res.data.token
         }else {
           wx.showToast({
             icon: 'none',
