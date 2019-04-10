@@ -10,9 +10,7 @@ page {
   justify-content: space-between;
   box-sizing: border-box;
   overflow: hidden;
-  
 }
-
 </style>
 
 <script>
@@ -27,7 +25,12 @@ setStore(store);
 
 export default class extends wepy.app {
   config = {
-    pages: ['pages/index', 'pages/album/album','pages/write/write','pages/gallery/gallery'],
+    pages: [
+      'pages/index',
+      'pages/album/album',
+      'pages/write/write',
+      'pages/gallery/gallery'
+    ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
@@ -65,7 +68,8 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    auth:null
+    auth: null,
+    token: null
   };
 
   constructor() {
@@ -76,6 +80,24 @@ export default class extends wepy.app {
 
   onLaunch() {
     let self = this;
+    wx.request({
+      url: 'http://www.mitty.work:3001/getToken', // 仅为示例，并非真实的接口地址
+      method: 'GET',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res.data)
+        if(res.data.code == 0) {
+          self.token = res.data.token
+        }else {
+          wx.showToast({
+            icon: 'none',
+            title: 'error'
+          })
+        }
+      }
+    });
   }
 
   sleep(s) {
