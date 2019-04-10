@@ -27,10 +27,12 @@
     .photo_wrapper{
       display: flex;
       position: relative;
+      justify-content: space-between;
+      width: 93%;
       image {
         width: 150rpx;
         height:150rpx;
-        margin-right: 30rpx;
+        // margin-right: 30rpx;
       }
       image::after{
         content: "你好"
@@ -39,13 +41,12 @@
         width:150rpx;
         height: 150rpx;
         position: absolute;
-        left: 540rpx;
+        right:  0rpx;
         line-height: 150rpx;
         text-align: center;
         text-decoration:underline;
         color:white;
         font-size: 30rpx;
-        // border-bottom: 1px solid #eee;
         background-color: rgba(0,0,0,.3)
       }
 
@@ -73,7 +74,7 @@
       </view>
       <view class="photo_wrapper">
           <image wx:for="{{item.imgList}}" wx:key="imgIndex" @tap="prviewImage({{item.imgList}},{{imgItem}})" wx:for-index="imgIndex" wx:for-item="imgItem" src="{{imgItem}}" mode="aspectFill"></image>
-          <!-- <view class="more">More</view>         -->
+          <view class="more" @tap="goto">More</view>        
       </view>
     </view>
     <!-- <view class="item" style="animation-delay':'+{}+'s">
@@ -175,6 +176,11 @@ export default class Album extends wepy.page {
       wx.previewImage({
         current: imgIndex, // 当前显示图片的http链接
         urls: tmpList // 需要预览的图片http链接列表
+      })
+    },
+    goto(){
+      wx.navigateTo({
+        url: '/pages/gallery/gallery?id=1'
       })
     }
   }; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
