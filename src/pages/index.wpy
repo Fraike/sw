@@ -125,6 +125,7 @@
 import wepy from 'wepy';
 import { connect } from 'wepy-redux';
 import { redierct } from "../utils/utils";
+import regeneratorRuntime from '../regenerator-runtime/runtime.js';
 
 @connect({
   num(state) {
@@ -166,7 +167,7 @@ export default class Index extends wepy.page {
 
   };
 
-  onLoad() {
+  async onLoad() {
     let self = this;
     wx.getSetting({
       success(res) {
@@ -180,6 +181,17 @@ export default class Index extends wepy.page {
           self.$apply();
         }
         
+      }
+    });
+
+      await wx.request({
+      url: 'http://www.mitty.work:3001/getAllMShare', // 仅为示例，并非真实的接口地址
+      method: 'GET',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res.data)
       }
     });
 
