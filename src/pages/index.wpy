@@ -86,7 +86,19 @@
   }
   // background-color: black
   // overflow: hidden;
+
 }
+  .img-box{
+    padding: 20rpx;
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 20rpx;
+    margin-bottom: 20rpx;
+    image {
+      width: 223rpx;
+      height: 223rpx;
+    }
+  }
 </style>
 <template>
   <view class="container">
@@ -103,16 +115,20 @@
         <open-data type="userAvatarUrl"></open-data>
       </view>
     </view>
-    <view class="item">
+    <view class="item" wx:for="{{dataList}}" wx:key={{index}}>
       <view class="item_header">
         <open-data type="userAvatarUrl" class='avatar'></open-data>
         <view class="info">
-          <view>2019.1.1</view>
-          <view>xxxx</view>
+          <view>{{item.date}} {{item.time}}</view>
+          <view>{{item.location}}</view>
         </view>
       </view>
       <view class="content">
-        sss
+        {{item.content}}
+      </view>
+      <view class="img-box">
+        <image src="{{item.imagesUrl}}" mode="aspectFil"
+          lazy-load="false" />
       </view>
     </view>
     <view class="upload_btn" @tap="tanHandler('write/write')">
@@ -148,7 +164,8 @@ export default class Index extends wepy.page {
     auth: null,
     userInfo: {
       nickName: '加载中...'
-    }
+    },
+    dataList: []
   };
 
   computed = {};
@@ -192,6 +209,15 @@ export default class Index extends wepy.page {
       },
       success(res) {
         console.log(res.data)
+        if(res.data.code == 0) {
+          self.dataList = res.data.list
+          self.$apply()
+        }else {
+          wx.showToast({
+            icon: 'none',
+            title: res.data.msg
+          })
+        }
       }
     });
 

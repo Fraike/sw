@@ -290,15 +290,35 @@ export default class Write extends wepy.page {
         }
       });
     },
-    submit(){
+    async submit(){
         if(this.imgNum!=0){
-            wx.toast({
+            wx.showToast({
                 icon: 'none',
                 title: '稍等下'
             })
             return null
         }
         console.log(this.form)
+        await wx.request({
+        url: 'http://www.mitty.work:3001/uploadMShare', // 仅为示例，并非真实的接口地址
+        method: 'GET',
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success(res) {
+            console.log(res.data)
+            if(res.data.code == 0) {
+              self.dataList = res.data.list
+              self.$apply()
+            }else {
+              wx.showToast({
+                icon: 'none',
+                title: res.data.msg
+              })
+            }
+          }
+        });
+
     }
   }; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
 
