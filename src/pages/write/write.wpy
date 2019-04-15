@@ -58,7 +58,7 @@
       }
     }
     .image_item:nth-child(3n) {
-      margin-right: none;
+      margin-right: 0;
     }
   }
 }
@@ -168,6 +168,7 @@
 import wepy from 'wepy';
 import dayjs from 'dayjs';
 const qiniuUploader = require("../../plugins/qiniuUploader.js");
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 
 export default class Write extends wepy.page {
   config = {

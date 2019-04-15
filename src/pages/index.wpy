@@ -19,7 +19,7 @@
   position: relative;
   image {
     width: 100%;
-    // height: 100%;
+    height: 100%;
   }
   .avatar_l {
     position: absolute;
@@ -54,7 +54,7 @@
     align-items: center;
     height: 40rpx;
     padding: 20rpx;
-    .avatar {
+    image {
       width: 80rpx;
       height: 80rpx;
       border-radius: 8rpx;
@@ -69,6 +69,7 @@
     }
   }
   .content {
+    font-size:35rpx;
     padding: 20rpx
   }
 }
@@ -92,11 +93,46 @@
     padding: 20rpx;
     display: flex;
     justify-content: flex-start;
-    margin-right: 20rpx;
-    margin-bottom: 20rpx;
+    flex-wrap: wrap;
     image {
       width: 223rpx;
       height: 223rpx;
+      margin-right: 20rpx;
+      margin-bottom: 20rpx;
+    }
+    image:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+  .timing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform:translate(-50%,-50%);
+    .timing-header {
+      font-size: 13px;
+      color: white;
+      image {
+        width: 60rpx;
+        height: 60rpx;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+    .timing-time {
+      font-size: 13px;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-shadow: 3rpx;
+      // text-align: center;
+      image {
+        width: 50rpx;
+        height: 50rpx;
+        margin-right: 5rpx;
+      }
     }
   }
 </style>
@@ -108,8 +144,20 @@
     <view class="header">
       <!-- <image src="../assests/images/header_bg.jpg" mode="widthFix"> -->
       <image src="../assests/images/bg.jpg" mode="widthFix">
+      <view class="timing">
+        <view class="timing-header">
+          <span>TIME UNTIL 2019-02-09</span>
+          <image src="../assests/images/calendar.png" mode="widthFix">
+          <span>CHERISH EVERY DAY</span>
+        </view>
+        <view class="timing-time">
+        <!-- <image src="../assests/images/calendar.png" mode="widthFix">  -->
+        {{cd_day}}天 {{cd_hour}}时 {{cd_minute}}分 {{cd_second}}秒
+        </view>
+      </view>
       <view class="avatar_l">
-        <open-data type="userAvatarUrl"></open-data>
+        <!-- <open-data type="userAvatarUrl"></open-data> -->
+        <image src="https://wx.qlogo.cn/mmopen/vi_32/bnFrjJNklNGwmLujxOx0IiaMDNDA9QxXfQlBYONnib74LRb09Tnubw8S6rOcpWiackJJOmhtypwic0c0N60RmTWVfA/132" mode="aspectFil"/>
       </view>
       <view class="avatar_r">
         <open-data type="userAvatarUrl"></open-data>
@@ -117,7 +165,7 @@
     </view>
     <view class="item" wx:for="{{dataList}}" wx:key={{index}}>
       <view class="item_header">
-        <open-data type="userAvatarUrl" class='avatar'></open-data>
+        <image src="{{item.avatarUrl}}" mode="aspectFil"/>
         <view class="info">
           <view>{{item.date}} {{item.time}}</view>
           <view>{{item.location}}</view>
@@ -127,8 +175,14 @@
         {{item.content}}
       </view>
       <view class="img-box">
-        <image src="{{item.imagesUrl}}" mode="aspectFil"
-          lazy-load="false" />
+        <image wx:for="{{item.imagesUrl}}"  
+        wx:for-item="imgItem"
+        wx:key="idx"
+        wx:for-index="idx" 
+        src="{{imgItem}}" 
+        mode="aspectFil"
+        @tap="previewImage({index},{idx})"
+        lazy-load="false" />
       </view>
     </view>
     <view class="upload_btn" @tap="tanHandler('write/write')">
@@ -141,6 +195,7 @@
 import wepy from 'wepy';
 import { connect } from 'wepy-redux';
 import { redierct } from "../utils/utils";
+import dayjs from 'dayjs';
 import regeneratorRuntime from '../regenerator-runtime/runtime.js';
 
 @connect({
@@ -165,7 +220,19 @@ export default class Index extends wepy.page {
     userInfo: {
       nickName: '加载中...'
     },
-    dataList: []
+    dataList: [],
+    initTime: dayjs('2019-02-09 15:23:00'),
+    cd_day: null,
+    cd_minute: null,
+    cd_hour: null,
+    cd_second: null,
+    imgList: [
+      "http://cdn.mitty.work/%E6%8B%8D%E6%91%84-1339(750).jpg",
+      "http://cdn.mitty.work/%E6%8B%8D%E6%91%84-1339(750).jpg",
+      "http://cdn.mitty.work/%E6%8B%8D%E6%91%84-1339(750).jpg"
+    ]
+    
+
   };
 
   computed = {};
@@ -180,12 +247,50 @@ export default class Index extends wepy.page {
     },
     tanHandler(url){
       redierct(url)
-    }
+    },
+    previewImage(index,idx) {
+      console.log(index)
+      console.log(idx)
+      // wx.previewImage({
+      //   current: this.images[index], //当前预览的图片
+      //   urls: this.images //所有要预览的图片
+      // });
+    },
 
   };
 
+  onShow(){
+    console.log(this.computeTime())
+    setInterval(()=>{
+        this.computeTime()
+    },1000)
+    wx.hideLoading()
+
+  }
+
+  computeTime(){
+      let currentTime = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')
+      // console.log(currentTime)
+      // console.log(this.initTime)
+      let tmpTime = dayjs(currentTime)
+      this.cd_day = tmpTime.diff(this.initTime,'day');
+      this.cd_hour = tmpTime.diff(this.initTime,'hour') - (this.cd_day)*24 ;
+      this.cd_minute = tmpTime.diff(this.initTime,'minute') - tmpTime.diff(this.initTime,'hour')*60;
+      this.cd_second = tmpTime.diff(this.initTime,'second') - tmpTime.diff(this.initTime,'minute')*60;
+      this.$apply()
+      // console.log(tmpTime.diff(this.initTime,'month'))
+      // console.log(tmpTime.diff(this.initTime,'day'))
+      // console.log(tmpTime.diff(this.initTime,'hour'))
+      // console.log(tmpTime.diff(this.initTime,'minute'))
+      // console.log(tmpTime.diff(this.initTime,'second'))
+    }
+
   async onLoad() {
+    wx.showLoading()
     let self = this;
+    console.log(self)
+
+
     wx.getSetting({
       success(res) {
         console.log(res.authSetting);
@@ -229,6 +334,7 @@ export default class Index extends wepy.page {
     //   }
     //   self.$apply();
     // });
+    
   };
   onGotUserInfo(e) {console.log('sfdsf')}
   // bindgetuserinfo:function(e){
