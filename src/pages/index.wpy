@@ -157,13 +157,13 @@
       </view>
       <view class="avatar_l">
         <!-- <open-data type="userAvatarUrl"></open-data> -->
-        <image src="https://wx.qlogo.cn/mmopen/vi_32/bnFrjJNklNGwmLujxOx0IiaMDNDA9QxXfQlBYONnib74LRb09Tnubw8S6rOcpWiackJJOmhtypwic0c0N60RmTWVfA/132" mode="aspectFil"/>
+        <image src="https://wx.qlogo.cn/mmopen/vi_32/bnFrjJNklNGwmLujxOx0IiaMDNDA9QxXfQlBYONnib74LRb09Tnubw8S6rOcpWiackJJOmhtypwic0c0N60RmTWVfA/132" mode="widthFix"/>
       </view>
       <view class="avatar_r">
         <open-data type="userAvatarUrl"></open-data>
       </view>
     </view>
-    <view class="item" wx:for="{{dataList}}" wx:key={{index}}>
+    <view class="item" wx:for="{{dataList}}" wx:key={{index}} wx:for-index="index" >
       <view class="item_header">
         <image src="{{item.avatarUrl}}" mode="aspectFil"/>
         <view class="info">
@@ -181,7 +181,7 @@
         wx:for-index="idx" 
         src="{{imgItem}}" 
         mode="aspectFil"
-        @tap="previewImage({index},{idx})"
+       @tap="prviewImage({{index}},{{idx}})"
         lazy-load="false" />
       </view>
     </view>
@@ -243,18 +243,18 @@ export default class Index extends wepy.page {
         this.auth = false
         this.userInfo = e.detail.userInfo
       }
-      console.log(e.detail.userInfo)
     },
     tanHandler(url){
       redierct(url)
     },
-    previewImage(index,idx) {
+    prviewImage(index,idx) {
       console.log(index)
       console.log(idx)
-      // wx.previewImage({
-      //   current: this.images[index], //当前预览的图片
-      //   urls: this.images //所有要预览的图片
-      // });
+      // self.dataList
+      wx.previewImage({
+        current: this.dataList[index].imagesUrl[idx], //当前预览的图片
+        urls: this.dataList[index].imagesUrl //所有要预览的图片
+      });
     },
 
   };
@@ -288,13 +288,9 @@ export default class Index extends wepy.page {
   async onLoad() {
     wx.showLoading()
     let self = this;
-    console.log(self)
-
-
     wx.getSetting({
       success(res) {
-        console.log(res.authSetting);
-        if(res.authSetting){console.log('ww')}
+        if(res.authSetting){console.log('authSetting')}
         if (res.authSetting['scope.userInfo']===true) {
           self.auth = false;
           self.$apply();
@@ -313,9 +309,16 @@ export default class Index extends wepy.page {
         'content-type': 'application/json' // 默认值
       },
       success(res) {
-        console.log(res.data)
         if(res.data.code == 0) {
-          self.dataList = res.data.list
+          self.dataList = res.data.list.map((item)=>{
+            item.imagesUrl = item.imagesUrl.map((imgitem,index)=>{
+              if(imgitem.substr(0,4)!='http'){
+                return 'http://'+imgitem
+              }
+              return imgitem
+            })
+            return item
+          })
           self.$apply()
         }else {
           wx.showToast({
@@ -328,12 +331,12 @@ export default class Index extends wepy.page {
 
     
 
-    // this.$parent.getUserInfo(function(userInfo) {
-    //   if (userInfo) {
-    //     self.userInfo = userInfo;
-    //   }
-    //   self.$apply();
-    // });
+    this.$parent.getUserInfo(function(userInfo) {
+      if (userInfo) {
+        self.userInfo = userInfo;
+      }
+      self.$apply();
+    });
     
   };
   onGotUserInfo(e) {console.log('sfdsf')}

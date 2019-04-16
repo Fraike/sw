@@ -1,58 +1,58 @@
 <style lang="less" scoped>
-  .item {
-    width: 100%;
-    padding-top: 15rpx;
-    padding-left: 50rpx;
-    padding-bottom: 25rpx;
-    background-color: white;
-     margin-bottom: 20rpx;
-     animation: fadeIn .8s;
-     opacity: 0;
-     animation-fill-mode:forwards;
-    //  animation-delay:
-    .item_header{
-      width: 90%;
-      padding-bottom: 15rpx;
-      border-bottom: 1px solid #eee;
-      margin-bottom: 15rpx;
-      h2 {
-        font-size: 40rpx;
-        margin-right: 10rpx;
-      }
-      span {
-        font-size: 25rpx;
-        color: #ababab;
-      }
+.item {
+  width: 100%;
+  padding-top: 15rpx;
+  padding-left: 50rpx;
+  padding-bottom: 25rpx;
+  background-color: white;
+  margin-bottom: 20rpx;
+  animation: fadeIn 0.8s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  //  animation-delay:
+  .item_header {
+    width: 90%;
+    padding-bottom: 15rpx;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15rpx;
+    h2 {
+      font-size: 40rpx;
+      margin-right: 10rpx;
     }
-    .photo_wrapper{
-      display: flex;
-      position: relative;
-      justify-content: space-between;
-      width: 93%;
-      image {
-        width: 150rpx;
-        height:150rpx;
-        // margin-right: 30rpx;
-      }
-      image::after{
-        content: "你好"
-      }
-      .more {
-        width:150rpx;
-        height: 150rpx;
-        position: absolute;
-        right:  0rpx;
-        line-height: 150rpx;
-        text-align: center;
-        text-decoration:underline;
-        color:white;
-        font-size: 30rpx;
-        background-color: rgba(0,0,0,.3)
-      }
-
+    span {
+      font-size: 25rpx;
+      color: #ababab;
     }
   }
-@keyframes fadeIn{
+  .photo_wrapper {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 93%;
+    image {
+      width: 150rpx;
+      height: 150rpx;
+      // margin-right: 30rpx;
+    }
+    image::after {
+      content: '你好';
+    }
+    .more {
+      width: 150rpx;
+      height: 150rpx;
+      position: absolute;
+      top: 0;
+      right: 0rpx;
+      line-height: 150rpx;
+      text-align: center;
+      text-decoration: underline;
+      color: white;
+      font-size: 30rpx;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translate3d(0, 100%, 0);
@@ -73,8 +73,16 @@
         <span>(3 photos)</span>
       </view>
       <view class="photo_wrapper">
-          <image wx:for="{{item.imgList}}" wx:key="imgIndex" @tap="prviewImage({{item.imgList}},{{imgItem}})" wx:for-index="imgIndex" wx:for-item="imgItem" src="{{imgItem}}" mode="aspectFill"></image>
-          <view class="more" @tap="goto">More</view>        
+        <image
+          wx:for="{{item.imgList}}"
+          wx:key="imgIndex"
+          @tap="prviewImage({{item.imgList}},{{imgItem}})"
+          wx:for-index="imgIndex"
+          wx:for-item="imgItem"
+          src="{{imgItem}}"
+          mode="aspectFill"
+        >
+        <view class="more" @tap="goto">More</view>
       </view>
     </view>
     <!-- <view class="item" style="animation-delay':'+{}+'s">
@@ -104,8 +112,7 @@
 
           <view class="more">More</view>        
       </view>
-    </view> -->
-
+    </view>-->
   </view>
 </template>
 
@@ -121,9 +128,26 @@ export default class Album extends wepy.page {
 
   customFunction() {} //自定义方法
 
-  onLoad() {} // 在Page和Component共用的生命周期函数
+  async onLoad() {
+      let albumName = ['美食']
+      console.log('albumName')
+      // await wx.request({
+      //   url: 'http://localhost:3035/getAlbumList', // 仅为示例，并非真实的接口地址
+      //   method: 'post',
+      //   data:albumName,
+      //   header: {
+      //     'content-type': 'application/json' // 默认值
+      //   },
+      //   success(res) {
+      //     console.log(res)
+      //     }
+      //   });
 
-  onShow() {} // 只在Page中存在的页面生命周期函数
+  } // 在Page和Component共用的生命周期函数
+
+  onShow() {
+    console.log('albumName')
+  } // 只在Page中存在的页面生命周期函数
 
   config = {}; // 只在Page实例中存在的配置数据，对应于原生的page.json文件
 

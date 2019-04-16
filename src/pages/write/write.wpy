@@ -17,6 +17,7 @@
   padding-bottom: 20rpx;
   overflow: hidden;
   textarea {
+    width: 92%;
     font-size: 30rpx;
   }
   .image_container {
@@ -292,6 +293,7 @@ export default class Write extends wepy.page {
       });
     },
     async submit(){
+      // console.log(this.$parent.globalData)
         if(this.imgNum!=0){
             wx.showToast({
                 icon: 'none',
@@ -300,23 +302,25 @@ export default class Write extends wepy.page {
             return null
         }
         console.log(this.form)
+        this.form.avatarUrl=this.$parent.globalData.userInfo.avatarUrl
         await wx.request({
         url: 'http://www.mitty.work:3001/uploadMShare', // 仅为示例，并非真实的接口地址
-        method: 'GET',
+        method: 'post',
+        data:this.form,
         header: {
           'content-type': 'application/json' // 默认值
         },
         success(res) {
-            console.log(res.data)
-            if(res.data.code == 0) {
-              self.dataList = res.data.list
-              self.$apply()
-            }else {
-              wx.showToast({
-                icon: 'none',
-                title: res.data.msg
-              })
-            }
+          if(res.data.code == 0) {
+            wx.showToast({
+              icon: 'success',
+              title: '亲爱的，上传成功咯'
+            })
+            setTimeout(()=>{
+              wx.navigateBack()
+            },1000)
+          }
+            console.log(res)
           }
         });
 
