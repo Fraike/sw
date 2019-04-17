@@ -1,0 +1,214 @@
+<style lang="less" scoped>
+.item {
+  width: 100%;
+  padding-top: 15rpx;
+  padding-left: 50rpx;
+  padding-bottom: 25rpx;
+  background-color: white;
+  margin-bottom: 20rpx;
+  animation: fadeIn 0.8s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  //  animation-delay:
+  .item_header {
+    width: 90%;
+    padding-bottom: 15rpx;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15rpx;
+    h2 {
+      font-size: 40rpx;
+      margin-right: 10rpx;
+    }
+    span {
+      font-size: 25rpx;
+      color: #ababab;
+    }
+  }
+  .photo_wrapper {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 93%;
+    image {
+      width: 150rpx;
+      height: 150rpx;
+      // margin-right: 30rpx;
+    }
+    image::after {
+      content: '你好';
+    }
+    .more {
+      width: 150rpx;
+      height: 150rpx;
+      position: absolute;
+      top: 0;
+      right: 0rpx;
+      line-height: 150rpx;
+      text-align: center;
+      text-decoration: underline;
+      color: white;
+      font-size: 30rpx;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+</style>
+
+<template>
+  <view class="container">
+    <view wx:for="{{albumList}}" class="item" wx:key="index" style="animation-delay:{{index/3}}s">
+      <view class="item_header">
+        <h2>{{item.title}}</h2>
+        <span>(3 photos)</span>
+      </view>
+      <view class="photo_wrapper">
+        <image
+          wx:for="{{item.imgList}}"
+          wx:key="imgIndex"
+          @tap="prviewImage({{item.imgList}},{{imgItem}})"
+          wx:for-index="imgIndex"
+          wx:for-item="imgItem"
+          src="{{imgItem}}"
+          mode="aspectFill"
+        >
+        <view class="more" @tap="goto">More</view>
+      </view>
+    </view>
+    <!-- <view class="item" style="animation-delay':'+{}+'s">
+      <view class="item_header">
+        <h2>xxxx</h2>
+        <span>(3 photos)</span>
+      </view>
+      <view class="photo_wrapper">
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill">111</image>
+
+          <view class="more">More</view>        
+      </view>
+    </view>
+    <view class="item" style="animation-delay:1s">
+      <view class="item_header">
+        <h2>xxxx</h2>
+        <span>(3 photos)</span>
+      </view>
+      <view class="photo_wrapper">
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill"></image>
+          <image src="http://cdn.mitty.work/article1.jpg?imageslim" mode="aspectFill">111</image>
+
+          <view class="more">More</view>        
+      </view>
+    </view>-->
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Album extends wepy.page {
+  config = {
+    navigationBarTitleText: '相册'
+  };
+
+  customData = {}; // 自定义数据
+
+  customFunction() {} //自定义方法
+
+  async onLoad() {
+      let albumName = ['美食']
+      console.log('albumName')
+      // await wx.request({
+      //   url: 'http://localhost:3035/getAlbumList', // 仅为示例，并非真实的接口地址
+      //   method: 'post',
+      //   data:albumName,
+      //   header: {
+      //     'content-type': 'application/json' // 默认值
+      //   },
+      //   success(res) {
+      //     console.log(res)
+      //     }
+      //   });
+
+  } // 在Page和Component共用的生命周期函数
+
+  onShow() {
+    console.log('albumName')
+  } // 只在Page中存在的页面生命周期函数
+
+  config = {}; // 只在Page实例中存在的配置数据，对应于原生的page.json文件
+
+  data = {
+    albumList: [
+      {
+        title: "xxx",
+        imgList: [
+          "http://cdn.mitty.work/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+        ]
+      },
+      {
+        title: "xxx",
+        imgList: [
+          "http://cdn.mitty.work/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+        ]
+      },
+      {
+        title: "xxx",
+        imgList: [
+          "http://cdn.mitty.work/article1.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article2.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article3.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim",
+          "http://cdn.mitty.work/article4.jpg?imageView2/1/w/200/h/200/format/jpg/interlace/1/q/73|imageslim"
+        ]
+      }
+    ]
+  }; // 页面所需数据均需在这里声明，可用于模板数据绑定
+
+  components = {}; // 声明页面中所引用的组件，或声明组件中所引用的子组件
+
+  mixins = []; // 声明页面所引用的Mixin实例
+
+  computed = {}; // 声明计算属性（详见后文介绍）
+
+  watch = {}; // 声明数据watcher（详见后文介绍）
+
+  methods = {
+    prviewImage(imgList,imgIndex){
+      let tmpList = imgList.map((item,index)=>{
+        let tmpIndex = item.indexOf('?')
+        return item.slice(0,tmpIndex)+"?imageslim"
+      })
+      wx.previewImage({
+        current: imgIndex, // 当前显示图片的http链接
+        urls: tmpList // 需要预览的图片http链接列表
+      })
+    },
+    goto(){
+      wx.navigateTo({
+        url: '/pages/gallery/gallery?id=1'
+      })
+    }
+  }; // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
+
+  events = {}; // 声明组件之间的事件处理函数
+}
+</script>
