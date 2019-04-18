@@ -19,7 +19,7 @@
         bindload="onImageLoad"
       >
     </view>
-    <scroll-view scroll-y="true" style="height:{{scrollH}}px" bindscrolltolower="loadImages">
+    <scroll-view scroll-y="true" style="height:{{scrollH}}px">
       <view style="width:100%">
         <view class="img_item">
           <view wx:for="{{col1}}" wx:key="id">
@@ -58,8 +58,7 @@ export default class Gallery extends wepy.page {
           let scrollH = wh;
           self.scrollH = scrollH;
           self.imgWidth = imgWidth;
-          console.log(self.loadImages())
-          // self.loadImages();
+          self.loadImages()
       }
     })
   } // 在Page和Component共用的生命周期函数
@@ -74,16 +73,16 @@ export default class Gallery extends wepy.page {
 
   methods = {
         onImageLoad(e) {
+          console.log('ww')
         let imageId = e.currentTarget.id;
         let oImgW = e.detail.width;         //图片原始宽度
         let oImgH = e.detail.height;        //图片原始高度
-        console.log(this.data)
         let imgWidth = this.data.imgWidth;  //图片设置的宽度
         let scale = imgWidth / oImgW;        //比例计算
         let imgHeight = oImgH * scale;      //自适应高度
 
         let images = this.data.images;
-        let imageObj = null;
+        let imageObj = {};
 
         for (let i = 0; i < images.length; i++) {
             let img = images[i];
@@ -119,7 +118,7 @@ export default class Gallery extends wepy.page {
 
         // this.setData(data);
     },
-        prviewImage(imgUrl){
+    prviewImage(imgUrl){
       // let tmpList = imgList.map((item,index)=>{
       //   let tmpIndex = item.indexOf('?')
       //   return item.slice(0,tmpIndex)+"?imageslim"
@@ -130,7 +129,7 @@ export default class Gallery extends wepy.page {
       })
     }
   }; 
-          loadImages() {
+  loadImages() {
         let images = [
 
             { pic: "http://cdn.mitty.work/article1.jpg?imageView2/0/q/75|imageslim", height: 0 },
@@ -141,7 +140,7 @@ export default class Gallery extends wepy.page {
             { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
             { pic: "http://cdn.mitty.work/article1.jpg?imageView2/0/q/75|imageslim", height: 0 },
             { pic: "http://cdn.mitty.work/article2.jpg?imageView2/0/q/75|imageslim", height: 0 },
-            { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
+            // { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
             { pic: "http://cdn.mitty.work/article1.jpg?imageView2/0/q/75|imageslim", height: 0 },
             { pic: "http://cdn.mitty.work/article2.jpg?imageView2/0/q/75|imageslim", height: 0 },
             { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
@@ -154,10 +153,6 @@ export default class Gallery extends wepy.page {
         }
         this.loadingCount = images.length;
         this.images = images;
-        // this.setData({
-        //     loadingCount: images.length,
-        //     images: images
-        // });
     }
 }
 </script>
