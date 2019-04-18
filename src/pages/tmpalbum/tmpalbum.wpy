@@ -128,24 +128,6 @@ export default class Album extends wepy.page {
 
   customFunction() {} //自定义方法
 
-<<<<<<< HEAD
-  onLoad() {
-      let albumList = ['美食','云南','小时候']
-      wx.request({
-      url: 'http://localhost:3035/getAlbumList', // 仅为示例，并非真实的接口地址
-      method: 'post',
-      data: albumList,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        console.log(res.data)
-      }
-    });
-  } // 在Page和Component共用的生命周期函数
-
-  onShow() {} // 只在Page中存在的页面生命周期函数
-=======
   async onLoad() {
       let albumName = ['美食']
       console.log('albumName')
@@ -166,7 +148,6 @@ export default class Album extends wepy.page {
   onShow() {
     console.log('albumName')
   } // 只在Page中存在的页面生命周期函数
->>>>>>> 57c6214fd9c4db181d4d43815a90f41915d1b54d
 
   config = {}; // 只在Page实例中存在的配置数据，对应于原生的page.json文件
 
