@@ -17,7 +17,7 @@
         id="{{item.id}}"
         src="{{item.pic}}"
         bindload="onImageLoad"
-      >
+      />
     </view>
     <scroll-view scroll-y="true" style="height:{{scrollH}}px">
       <view style="width:100%">
@@ -73,7 +73,7 @@ export default class Gallery extends wepy.page {
 
   methods = {
         onImageLoad(e) {
-          console.log('ww')
+          // console.log('ww')
         let imageId = e.currentTarget.id;
         let oImgW = e.detail.width;         //图片原始宽度
         let oImgH = e.detail.height;        //图片原始高度
@@ -95,15 +95,15 @@ export default class Gallery extends wepy.page {
         imageObj.height = imgHeight;
 
         let loadingCount = this.data.loadingCount - 1;
-        let col1 = this.data.col1;
-        let col2 = this.data.col2;
+        let col1 = this.col1;
+        let col2 = this.col2;
 
         if (col1H <= col2H) {
             col1H += imgHeight;
-            col1.push(imageObj);
+            this.col1.push(imageObj);
         } else {
             col2H += imgHeight;
-            col2.push(imageObj);
+            this.col2.push(imageObj);
         }
 
         let data = {
