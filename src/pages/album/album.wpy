@@ -121,7 +121,20 @@ export default class Album extends wepy.page {
 
   customFunction() {} //自定义方法
 
-  onLoad() {} // 在Page和Component共用的生命周期函数
+  onLoad() {
+      let albumList = ['美食','云南','小时候']
+      wx.request({
+      url: 'http://localhost:3035/getAlbumList', // 仅为示例，并非真实的接口地址
+      method: 'post',
+      data: albumList,
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res.data)
+      }
+    });
+  } // 在Page和Component共用的生命周期函数
 
   onShow() {} // 只在Page中存在的页面生命周期函数
 
