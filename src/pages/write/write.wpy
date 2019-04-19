@@ -75,22 +75,25 @@
   background-color: white;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-size: 30rpx;
   color: #999;
   .picker {
-    margin-right: 280rpx;
+    margin-right: 250rpx;
     color: black;
   }
   .date_text {
     // float: right;
-    margin-right: 30rpx;
+    margin-right: 60rpx;
   }
   .location_picker {
     color: black;
   }
   .location {
-    position: absolute;
-    right: 40rpx;
+    // position: absolute;
+    margin-right: 60rpx;
+    flex:1;
+    word-wrap : break-word;
   }
 }
 .footer_btn {

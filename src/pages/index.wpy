@@ -139,7 +139,7 @@
 <template>
   <view class="container">
     <view wx-if="{{auth}}" class="auth">
-      <button open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">授权</button>
+      <button open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">授权一哈</button>
     </view>
     <view class="header">
       <!-- <image src="../assests/images/header_bg.jpg" mode="widthFix"> -->

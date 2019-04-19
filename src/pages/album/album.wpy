@@ -90,7 +90,7 @@
 
 <script>
 import wepy from 'wepy';
-
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 
 export default class Album extends wepy.page {
   config = {

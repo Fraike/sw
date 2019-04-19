@@ -38,6 +38,7 @@
 
 <script>
 import wepy from 'wepy';
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 
 let col1H = 0;
 let col2H = 0;
@@ -48,19 +49,51 @@ export default class Gallery extends wepy.page {
     navigationBarTitleText: '画廊'
   };
 
-  onLoad() {
+  async onLoad(options) {
+    // console.log(options)
+    
       let self =this;
-      wx.getSystemInfo({
-      success: (res) => {
-          let ww = res.windowWidth;
-          let wh = res.windowHeight;
-          let imgWidth = ww * 0.48;
-          let scrollH = wh;
-          self.scrollH = scrollH;
-          self.imgWidth = imgWidth;
-          self.loadImages()
+     
+
+      await wx.request({
+      url: 'http://localhost:3035/getGalleryList', // 仅为示例，并非真实的接口地址
+      method: 'post',
+      data: {albumName: options.id},
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res)
+        if(res.data.code == 0){
+          let resData;
+          self.imgList = res.data.data.map((item,index)=>{
+            return {height:0,pic:item+'?imageView2/0/q/75|imageslim'}
+          })
+          self.$apply()
+          wx.getSystemInfo({
+            success: (res) => {
+                let ww = res.windowWidth;
+                let wh = res.windowHeight;
+                let imgWidth = ww * 0.48;
+                let scrollH = wh;
+                self.scrollH = scrollH;
+                self.imgWidth = imgWidth;
+                self.loadImages()
+            }
+          })
+          // console.log(self.imgList)
+        }else{
+          wx.showToast({
+            icon: 'none',
+            title: '亲爱的，服务器好像开小差了'
+          })
+        }
       }
-    })
+    });
+
+
+
+
   } // 在Page和Component共用的生命周期函数
   data = {
         scrollH: 0,
@@ -68,7 +101,8 @@ export default class Gallery extends wepy.page {
         loadingCount: 0,
         images: [],
         col1: [],
-        col2: []
+        col2: [],
+        imgList: []
   }; // 页面所需数据均需在这里声明，可用于模板数据绑定
 
   methods = {
@@ -77,11 +111,11 @@ export default class Gallery extends wepy.page {
         let imageId = e.currentTarget.id;
         let oImgW = e.detail.width;         //图片原始宽度
         let oImgH = e.detail.height;        //图片原始高度
-        let imgWidth = this.data.imgWidth;  //图片设置的宽度
+        let imgWidth = this.imgWidth;  //图片设置的宽度
         let scale = imgWidth / oImgW;        //比例计算
         let imgHeight = oImgH * scale;      //自适应高度
-
-        let images = this.data.images;
+        console.log(images)
+        let images = this.images;
         let imageObj = {};
 
         for (let i = 0; i < images.length; i++) {
@@ -94,7 +128,7 @@ export default class Gallery extends wepy.page {
 
         imageObj.height = imgHeight;
 
-        let loadingCount = this.data.loadingCount - 1;
+        let loadingCount = this.loadingCount - 1;
         let col1 = this.col1;
         let col2 = this.col2;
 
@@ -113,19 +147,18 @@ export default class Gallery extends wepy.page {
         };
 
         if (!loadingCount) {
-            data.images = [];
+            this.images = [];
         }
 
         // this.setData(data);
     },
     prviewImage(imgUrl){
-      // let tmpList = imgList.map((item,index)=>{
-      //   let tmpIndex = item.indexOf('?')
-      //   return item.slice(0,tmpIndex)+"?imageslim"
-      // })
+      let self = this;
+      let index = imgUrl.indexOf('?')
+      let tmpInmgUrl = imgUrl.slice(0,index)
       wx.previewImage({
-        current: imgUrl, // 当前显示图片的http链接
-        urls: [imgUrl] // 需要预览的图片http链接列表
+        current: tmpInmgUrl, // 当前显示图片的http链接
+        urls:  [tmpInmgUrl]// 需要预览的图片http链接列表
       })
     }
   }; 
@@ -145,14 +178,15 @@ export default class Gallery extends wepy.page {
             { pic: "http://cdn.mitty.work/article2.jpg?imageView2/0/q/75|imageslim", height: 0 },
             { pic: "http://cdn.mitty.work/article3.jpg?imageView2/0/q/75|imageslim", height: 0 },
         ];
-
+        console.log(this.imgList)
         let baseId = "img-" + (+new Date());
 
-        for (let i = 0; i < images.length; i++) {
-            images[i].id = baseId + "-" + i;
+        for (let i = 0; i < this.imgList.length; i++) {
+            this.imgList[i].id = baseId + "-" + i;
         }
-        this.loadingCount = images.length;
-        this.images = images;
+        this.loadingCount = this.imgList.length;
+        this.images = this.imgList;
+        this.$apply()
     }
 }
 </script>
