@@ -132,7 +132,7 @@ export default class Album extends wepy.page {
       let albumName = ['美食']
       console.log('albumName')
       // await wx.request({
-      //   url: 'http://localhost:3035/getAlbumList', // 仅为示例，并非真实的接口地址
+      //   url: 'http://www.mitty.work/getAlbumList', // 仅为示例，并非真实的接口地址
       //   method: 'post',
       //   data:albumName,
       //   header: {
