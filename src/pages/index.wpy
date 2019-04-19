@@ -259,8 +259,10 @@ export default class Index extends wepy.page {
 
   };
 
-  onShow(){
-    console.log(this.computeTime())
+  async onShow(){
+    console.log('show')
+    await this.getList()
+    this.computeTime()
     setInterval(()=>{
         this.computeTime()
     },1000)
@@ -286,6 +288,7 @@ export default class Index extends wepy.page {
     }
 
   async onLoad() {
+    console.log('load')
     wx.showLoading()
     let self = this;
     wx.getSetting({
@@ -302,8 +305,23 @@ export default class Index extends wepy.page {
       }
     });
 
+   
+
+
+    
+
+    this.$parent.getUserInfo(function(userInfo) {
+      if (userInfo) {
+        self.userInfo = userInfo;
+      }
+      self.$apply();
+    });
+    
+  };
+  async getList(){
+      let self = this;
       await wx.request({
-      url: 'http://www.mitty.work:3001/getAllMShare', // 仅为示例，并非真实的接口地址
+      url: 'http://localhost:3035/getAllMShare', // 仅为示例，并非真实的接口地址
       method: 'GET',
       header: {
         'content-type': 'application/json' // 默认值
@@ -328,17 +346,7 @@ export default class Index extends wepy.page {
         }
       }
     });
-
-    
-
-    this.$parent.getUserInfo(function(userInfo) {
-      if (userInfo) {
-        self.userInfo = userInfo;
-      }
-      self.$apply();
-    });
-    
-  };
+  }
   onGotUserInfo(e) {console.log('sfdsf')}
   // bindgetuserinfo:function(e){
   //   console.log('sdsf')

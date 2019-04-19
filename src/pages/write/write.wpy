@@ -219,15 +219,20 @@ export default class Write extends wepy.page {
     },
     chooseImage() {
       let self = this;
-      self.imgNum++;
-      wx.chooseMessageFile({
+      wx.chooseImage({
         count: 9,
-        type: 'image',
-        // sizeType: ['original', 'compressed'],
-        // sourceType: ['album', 'camera'],
+        // type: 'image',
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
         success: function(res) {
             console.log(res)
+
+
             res.tempFiles.map((item,index)=>{
+            self.imgNum++;
+            var str = item.path;
+            var obj = str.lastIndexOf("/");
+            var objName = str.substr(obj + 1)
             qiniuUploader.upload(item.path, (res) => {
             console.log('file url is: ' + res.fileUrl);
             self.images = self.images.concat(item.path);
@@ -239,7 +244,7 @@ export default class Write extends wepy.page {
             }, {
             region: 'SCN',
             domain: 'cdn.mitty.work', // // bucket 域名，下载资源时用到。如果设置，会在 success callback 的 res 参数加上可以直接使用的 ImageURL 字段。否则需要自己拼接
-            key: item.name, // [非必须]自定义文件 key。如果不设置，默认为使用微信小程序 API 的临时文件名
+            key: objName, // [非必须]自定义文件 key。如果不设置，默认为使用微信小程序 API 的临时文件名
             uptoken: self.$parent.globalData.token, // 由其他程序生成七牛 uptoken
             }, (res) => {
                 console.log('上传进度', res.progress)
@@ -293,6 +298,7 @@ export default class Write extends wepy.page {
       });
     },
     async submit(){
+      console.log(this.imgNum)
       // console.log(this.$parent.globalData)
         if(this.imgNum!=0){
             wx.showToast({
@@ -301,8 +307,9 @@ export default class Write extends wepy.page {
             })
             return null
         }
-        console.log(this.form)
+      
         this.form.avatarUrl=this.$parent.globalData.userInfo.avatarUrl
+        console.log(this.form)
         await wx.request({
         url: 'http://www.mitty.work:3001/uploadMShare', // 仅为示例，并非真实的接口地址
         method: 'post',
